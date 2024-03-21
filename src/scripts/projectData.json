@@ -1,0 +1,8 @@
+{
+    "title": "DAIA: Diabetes Alert System",
+    "description": "An innovative virtual reality game set in a futuristic world.",
+    "technologies": ["React", "Node.js", "MongoDB", "Express", "Tailwind CSS"],
+    "githubLink": "https://github.com/notalim/daia_blog",
+    "imageLink": null,
+    "releaseDate": null
+}

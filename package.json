@@ -1,0 +1,19 @@
+{
+  "name": "new_notalim_backend",
+  "version": "1.0.0",
+  "description": "Backend for my portfolio",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "alim",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.8",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.0",
+    "mongodb": "^6.5.0"
+  }
+}
