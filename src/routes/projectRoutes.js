@@ -36,7 +36,7 @@ router.post("/", async (req, res) => {
             ? new Date(repoCreationDate)
             : null;
         
-        console.log("req.body", req.body)
+        // console.log("req.body", req.body)
 
         const projectId = await createProject(req.body);
         res.status(201).json({ projectId });
