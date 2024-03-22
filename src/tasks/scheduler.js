@@ -1,4 +1,5 @@
 import axios from "axios";
+import { changelogs } from "../config/mongoCollections.js";
 import { getProjects } from "../data/projects.js";
 import { insertChangelog, checkIfChangelogExists } from "../data/changelogs.js"; // Ensure these functions are implemented
 import cron from "node-cron";
@@ -11,9 +12,24 @@ const fetchGitHubDataForProject = async (project, type) => {
     try {
         const repoPath = new URL(project.githubLink).pathname;
         const since = new Date();
-        since.setDate(since.getDate() - 1); // Get the date for one day ago
+        // Fetch for the last month
 
-        console.log("Fetching", type, "for", project._id, "link", project.githubLink, "path", repoPath, "since", since.toISOString());
+        since.setMonth(since.getMonth() - 1);
+
+        
+
+        console.log(
+            "Fetching",
+            type,
+            "for",
+            project._id,
+            "link",
+            project.githubLink,
+            "path",
+            repoPath,
+            "since",
+            since.toISOString()
+        );
 
         const response = await axios.get(
             `https://api.github.com/repos${repoPath}/${type}`, // 'commits' or 'pulls'
@@ -26,6 +42,7 @@ const fetchGitHubDataForProject = async (project, type) => {
                 },
             }
         );
+        console.log("Received data for", type, ":", response.data);
         return response.data; // Array of data
     } catch (error) {
         console.error(
@@ -38,7 +55,11 @@ const fetchGitHubDataForProject = async (project, type) => {
 
 const updateChangelogs = async () => {
     const projects = await getProjects();
-    console.log("Updating changelogs for", projects.length, "projects")
+
+    // drop the collection
+    const changelogsCollection = await changelogs();
+    await changelogsCollection.drop();
+    // console.log("Updating changelogs for", projects.length, "projects");
     for (const project of projects) {
         // Fetch commits
         const commits = await fetchGitHubDataForProject(project, "commits");
@@ -85,5 +106,4 @@ const scheduleChangelogUpdates = () => {
 
 // scheduleChangelogUpdates();
 
-
-export {scheduleChangelogUpdates, updateChangelogs};
+export { scheduleChangelogUpdates, updateChangelogs };
