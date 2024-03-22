@@ -69,7 +69,7 @@ const updateChangelogs = async () => {
                     await insertChangelog({
                         projectId: project._id,
                         type: "COMMIT",
-                        projectName: project.title, // Use the title from the project schema
+                        projectName: project.shortTitle,
                         by: commit.commit.author.name,
                         dateTime: commit.commit.author.date,
                         message: commit.commit.message,
@@ -86,7 +86,7 @@ const updateChangelogs = async () => {
                     await insertChangelog({
                         projectId: project._id,
                         type: "PULL_REQUEST",
-                        projectName: project.title, // Use the title from the project schema
+                        projectName: project.shortTitle, // Use the title from the project schema
                         by: pr.user.login,
                         dateTime: pr.created_at,
                         message: pr.title,
@@ -98,8 +98,8 @@ const updateChangelogs = async () => {
 };
 
 const scheduleChangelogUpdates = () => {
-    cron.schedule("0 0 * * *", () => {
-        // At 00:00 (midnight) every day
+    // At 00:00 (midnight) every day
+    cron.schedule("0 0 * * *", async () => {
         updateChangelogs();
     });
 };
