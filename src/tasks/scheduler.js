@@ -13,6 +13,8 @@ const fetchGitHubDataForProject = async (project, type) => {
         const since = new Date();
         since.setDate(since.getDate() - 1); // Get the date for one day ago
 
+        console.log("Fetching", type, "for", project._id, "link", project.githubLink, "path", repoPath, "since", since.toISOString());
+
         const response = await axios.get(
             `https://api.github.com/repos${repoPath}/${type}`, // 'commits' or 'pulls'
             {
@@ -36,6 +38,7 @@ const fetchGitHubDataForProject = async (project, type) => {
 
 const updateChangelogs = async () => {
     const projects = await getProjects();
+    console.log("Updating changelogs for", projects.length, "projects")
     for (const project of projects) {
         // Fetch commits
         const commits = await fetchGitHubDataForProject(project, "commits");

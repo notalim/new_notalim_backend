@@ -10,6 +10,7 @@ import {
 } from "./tasks/scheduler.js";
 
 dotenv.config();
+console.log("MONGODB_URI", process.env.MONGODB_URI);
 
 const app = express();
 app.use(express.json());
