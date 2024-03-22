@@ -1,8 +1,59 @@
-{
-    "title": "DAIA: Diabetes Alert System",
-    "description": "An innovative virtual reality game set in a futuristic world.",
-    "technologies": ["React", "Node.js", "MongoDB", "Express", "Tailwind CSS"],
-    "githubLink": "https://github.com/notalim/daia_blog",
-    "imageLink": null,
-    "releaseDate": null
-}
+[
+    {
+        "title": "notalim Portfolio",
+        "shortTitle": "portfolio",
+        "description": "A portfolio website showcasing a range of projects with detailed information and interactive features. It includes various sections such as a project gallery, contact information, and integration with external APIs for dynamic content.",
+        "technologies": [
+            "React",
+            "Node.js",
+            "MongoDB",
+            "Vercel",
+            "Express",
+            "Tailwind CSS"
+        ],
+        "githubLink": "https://github.com/notalim/new_notalim",
+        "imageLink": null,
+        "releaseDate": "2024-03-21T00:00:00.000Z"
+    },
+    {
+        "title": "DAIA: Diabetes Alert System",
+        "shortTitle": "DAIA",
+        "description": "A blood sugar level monitoring system that sends alerts to the contacts's phone when their blood sugar level is too high or too low.",
+        "technologies": [
+            "React",
+            "Node.js",
+            "MongoDB",
+            "Express",
+            "Twilio",
+            "Tailwind CSS"
+        ],
+        "githubLink": "https://github.com/notalim/daia_blog",
+        "imageLink": null,
+        "releaseDate": null
+    },
+    {
+        "title": "Swoons: A Dating Platform",
+        "shortTitle": "Swoons",
+        "description": "A web application facilitating unique dating experiences with a focus on creativity and social interaction.",
+        "technologies": ["React", "Express", "MongoDB", "AWS", "Firebase"],
+        "githubLink": "https://github.com/Yousaf-R878/swoons",
+        "imageLink": null,
+        "releaseDate": "2023-12-01T00:00:00.000Z"
+    },
+    {
+        "title": "Snoops: A Dog Adoption Platform",
+        "shortTitle": "Snoops",
+        "description": "A platform streamlining the dog adoption process with user-friendly interfaces for adopters and shelters.",
+        "technologies": [
+            "JavaScript",
+            "Express",
+            "Handlebars",
+            "Node.js",
+            "MongoDB",
+            "jQuery"
+        ],
+        "githubLink": "https://github.com/notalim/snoops",
+        "imageLink": null,
+        "releaseDate": "2023-05-01T00:00:00.000Z"
+    }
+]
