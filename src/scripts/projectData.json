@@ -16,6 +16,16 @@
         "releaseDate": "2024-03-21T00:00:00.000Z"
     },
     {
+        "title": "notalim Portfolio backend",
+        "shortTitle": "portfolio-backend",
+        "description": "The backend for the notalim Portfolio website, providing the API for the frontend to interact with the database and external services.",
+        "technologies": ["Node.js", "MongoDB", "Express", "Cron", "Github API"],
+        "githubLink": "https://github.com/notalim/new_notalim_backend",
+        "imageLink": null,
+        "releaseDate": "2024-03-21T00:00:00.000Z"
+    },
+
+    {
         "title": "DAIA: Diabetes Alert System",
         "shortTitle": "DAIA",
         "description": "A blood sugar level monitoring system that sends alerts to the contacts's phone when their blood sugar level is too high or too low.",
@@ -55,5 +65,60 @@
         "githubLink": "https://github.com/notalim/snoops",
         "imageLink": null,
         "releaseDate": "2023-05-01T00:00:00.000Z"
+    },
+    {
+        "title": "Pinemelon Instagram Scraper",
+        "shortTitle": "instagram-scraper",
+        "description": "An Instagram likes and comments data scraping script, while I worked at Pine,melon.",
+        "technologies": ["Python", "Instagram API", "Selenium"],
+        "githubLink": "https://github.com/notalim/pinemelon-insta-scraper",
+        "imageLink": null,
+        "releaseDate": "2023-09-05T00:00:00.000Z"
+    },
+
+    {
+        "title": "Pinemelon Denver Map",
+        "shortTitle": "denver-geojsonmap",
+        "description": "A stylized map of Denver neighborhoods, showcasing various statistics. Made for Pinemelon",
+        "technologies": ["GeoJSON", "JavaScript", "Python"],
+        "githubLink": "https://github.com/notalim/pinemelon-denver-map",
+        "imageLink": null,
+        "releaseDate": "2023-08-07T00:00:00.000Z"
+    },
+    {
+        "title": "Genius Thief",
+        "shortTitle": "geniusthief",
+        "description": "A Python script for scraping lyrics data from the Genius website using the Genius API.",
+        "technologies": ["Python", "Requests", "BeautifulSoup"],
+        "githubLink": "https://github.com/notalim/geniusthief",
+        "imageLink": null,
+        "releaseDate": "2023-04-28T00:00:00.000Z"
+    },
+    {
+        "title": "CartiBot",
+        "shortTitle": "cartibot",
+        "description": "A Discord bot based on Playboi Carti, featuring commands related to the artist's tweets, song lines, and quotes.",
+        "technologies": ["Python"],
+        "githubLink": "https://github.com/notalim/cartibot",
+        "imageLink": null,
+        "releaseDate": "2023-05-07T00:00:00.000Z"
+    },
+    {
+        "title": "Intermediate Statistics CA Notes",
+        "shortTitle": "statistics-notes",
+        "description": "Notes for an Intermediate Statistics course, aiding students in learning R, RStudio, and R Markdown.",
+        "technologies": ["R", "RStudio", "R Markdown"],
+        "githubLink": "https://github.com/notalim/intermediate-statistics-ca-notes",
+        "imageLink": null,
+        "releaseDate": "2023-03-01T00:00:00.000Z"
+    },
+    {
+        "title": "Stdio Replica",
+        "shortTitle": "stdio-replica",
+        "description": "A replication of the stdio header, demonstrating low-level programming and I/O operations in C.",
+        "technologies": ["C"],
+        "githubLink": "https://github.com/notalim/stdio-replica",
+        "imageLink": null,
+        "releaseDate": "2022-12-01T00:00:00.000Z"
     }
 ]
