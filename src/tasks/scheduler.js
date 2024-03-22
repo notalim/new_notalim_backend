@@ -2,6 +2,10 @@ import axios from "axios";
 import { getProjects } from "../data/projects.js";
 import { insertChangelog, checkIfChangelogExists } from "../data/changelogs.js"; // Ensure these functions are implemented
 import cron from "node-cron";
+import { URL } from "url";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const fetchGitHubDataForProject = async (project, type) => {
     try {
@@ -76,4 +80,7 @@ const scheduleChangelogUpdates = () => {
     });
 };
 
-scheduleChangelogUpdates();
+// scheduleChangelogUpdates();
+
+
+export {scheduleChangelogUpdates, updateChangelogs};
