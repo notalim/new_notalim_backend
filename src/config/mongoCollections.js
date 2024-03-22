@@ -14,3 +14,4 @@ const getCollectionFn = (collection) => {
 };
 
 export const projects = getCollectionFn("projects");
+export const changelogs = getCollectionFn("changelogs");
