@@ -6,7 +6,7 @@ import cron from "node-cron";
 import { URL } from "url";
 import dotenv from "dotenv";
 
-dotenv.config();
+
 
 const fetchGitHubDataForProject = async (project, type) => {
     try {
@@ -100,7 +100,8 @@ const updateChangelogs = async () => {
 const scheduleChangelogUpdates = () => {
     // At 00:00 (midnight) every day
     cron.schedule("0 0 * * *", async () => {
-        updateChangelogs();
+        dotenv.config();
+        await updateChangelogs();
     });
 };
 

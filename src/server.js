@@ -10,7 +10,7 @@ import {
 } from "./tasks/scheduler.js";
 
 dotenv.config();
-console.log("MONGODB_URI", process.env.MONGODB_URI);
+// console.log("GITHUB_TOKEN", process.env.GITHUB_TOKEN);
 
 const app = express();
 app.use(express.json());
@@ -19,21 +19,11 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 setupRoutes(app);
-
-// Schedule the recurring task
-scheduleChangelogUpdates();
-
-// Call the function to run it immediately
-updateChangelogs()
-    .then(() => {
-        console.log("Initial changelog update complete.");
-    })
-    .catch((error) => {
-        console.error("Error during initial changelog update:", error);
-    });
+    
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
+    // scheduleChangelogUpdates();
     console.log(`Server running on port ${port}`);
 });
 
