@@ -1,5 +1,4 @@
-// api/cron.js
-import { updateChangelogs } from "../tasks/scheduler.js";
+import { updateChangelogs } from "../src/tasks/scheduler.js";
 
 export default async function (req, res) {
     if (req.method === "GET") {
