@@ -21,3 +21,12 @@ export async function getProjects() {
   const allProjects = await projectsCollection.find({}).toArray();
   return allProjects;
 }
+
+export const updateLastUpdateDate = async (projectId, lastUpdateDate) => {
+    const projectsCollection = await projects();
+    const updateDateResult = await projectsCollection.updateOne(
+        { _id: projectId },
+        { $set: { lastUpdateDate: lastUpdateDate } }
+    );
+    return updateDateResult;
+};

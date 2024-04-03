@@ -19,7 +19,8 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 setupRoutes(app);
-    
+
+await updateChangelogs();
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
