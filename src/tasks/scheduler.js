@@ -55,6 +55,11 @@ const fetchGitHubDataForProject = async (project, type) => {
 const updateChangelogs = async () => {
     const projects = await getProjects();
 
+    // drop old changelogs
+
+    const changelogsCollection = await changelogs();
+    await changelogsCollection.drop();
+
     for (const project of projects) {
         let lastDate = new Date(project.lastUpdateDate);
 
@@ -70,7 +75,7 @@ const updateChangelogs = async () => {
                         projectId: project._id,
                         type: "COMMIT",
                         projectName: project.shortTitle,
-                        by: commit.commit.author.name,
+                        by: commit.author.login,
                         dateTime: commit.commit.author.date,
                         message: commit.commit.message,
                     });
