@@ -1,5 +1,35 @@
 [
     {
+        "title": "Codagotchi",
+        "shortTitle": "codagotchi",
+        "description": "A VS Code extension that integrates a Tamagotchi-like experience where coding activities help nurture and evolve a digital pet. Users can level up their Codagotchi by completing coding tasks, participating in challenges, and maintaining a consistent coding schedule. The project utilizes GitHub usernames for friend functionality, enabling users to connect and compare their Codagotchi progress.",
+        "technologies": [
+            "TypeScript",
+            "Svelte",
+            "Firebase",
+            "Node.js",
+            "VS Code API"
+        ],
+        "githubLink": "https://github.com/pixl-garden/codagotchi",
+        "imageLink": null,
+        "releaseDate": null
+    },
+    {
+        "title": "ShowSeek Backend",
+        "shortTitle": "showseek-backend",
+        "description": "A comprehensive platform for movie and TV show enthusiasts to discover, track, and share media. The vibe feature allows users to share their current mood and receive personalized recommendations based on their mood and preferences.",
+        "technologies": [
+            "TypeScript",
+            "Firebase",
+            "GraphQL",
+            "OpenAI API",
+            "TMDB API"
+        ],
+        "githubLink": "https://github.com/notalim/showseek-server",
+        "imageLink": null,
+        "releaseDate": null
+    },
+    {
         "title": "notalim Portfolio",
         "shortTitle": "portfolio",
         "description": "A portfolio website showcasing a range of projects with detailed information and interactive features. It includes various sections such as a project gallery, contact information, and integration with external APIs for dynamic content.",

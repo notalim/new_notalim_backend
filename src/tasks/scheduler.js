@@ -7,8 +7,6 @@ import cron from "node-cron";
 import { URL } from "url";
 import dotenv from "dotenv";
 
-
-
 const fetchGitHubDataForProject = async (project, type) => {
     try {
         const repoPath = new URL(project.githubLink).pathname;
