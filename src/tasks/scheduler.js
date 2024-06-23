@@ -107,14 +107,14 @@ const updateChangelogs = async () => {
     }
 };
 
-const scheduleChangelogUpdates = () => {
-    // At 00:00 (midnight) every day
-    cron.schedule("0 0 * * *", async () => {
-        dotenv.config();
-        await updateChangelogs();
-    });
-};
+// const scheduleChangelogUpdates = () => {
+//     // At 00:00 (midnight) every day
+//     cron.schedule("0 0 * * *", async () => {
+//         dotenv.config();
+//         await updateChangelogs();
+//     });
+// };
 
 // scheduleChangelogUpdates();
 
-export { scheduleChangelogUpdates, updateChangelogs };
+export { updateChangelogs };

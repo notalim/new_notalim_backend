@@ -5,7 +5,6 @@ import setupRoutes from "./routes/index.js";
 
 // Import the function
 import {
-    scheduleChangelogUpdates,
     updateChangelogs,
 } from "./tasks/scheduler.js";
 
@@ -20,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 
 setupRoutes(app);
 
-// await updateChangelogs();
+await updateChangelogs();
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
