@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
         // Try to fetch from cache first
         const cachedChangelogs = await kv.get(cacheKey);
         if (cachedChangelogs) {
-            return res.status(200).json(JSON.parse(cachedChangelogs));
+            return res.status(200).json(cachedChangelogs);
         }
 
         // If not in cache, fetch from database

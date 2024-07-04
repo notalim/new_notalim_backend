@@ -51,17 +51,18 @@ router.get("/", async (req, res) => {
     try {
         const cachedProjects = await kv.get(cacheKey);
         if (cachedProjects) {
-            return res.status(200).json(JSON.parse(cachedProjects));
+            return res.status(200).json(cachedProjects);
         }
 
         const projects = await getProjects();
-        await kv.set(cacheKey, JSON.stringify(projects), {ex: 3600});
+        await kv.set(cacheKey, JSON.stringify(projects), { ex: 3600 }); // Cache for 1 hour
         res.status(200).json(projects);
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: error.message });
+        console.error("Error in GET /projects:", error);
+        res.status(500).json({ error: "Internal server error" });
     }
 });
+
 
 router.get("/:id", async (req, res) => {
     try {
