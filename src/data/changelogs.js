@@ -25,4 +25,3 @@ export async function checkIfChangelogExists(identifier) {
     const changelog = await changelogsCollection.findOne(query);
     return changelog !== null; 
 }
-

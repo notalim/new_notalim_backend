@@ -5,6 +5,7 @@ import {
     getProjectById,
 } from "../data/projects.js";
 import axios from "axios";
+import kv from "./redisClient.js"; 
 
 const router = express.Router();
 
@@ -15,9 +16,9 @@ router.post("/", async (req, res) => {
     try {
         repoPath = new URL(githubLink).pathname;
     } catch (error) {
-        return res.status(400).json({ error: "Invalid GitHub link" }); 
+        return res.status(400).json({ error: "Invalid GitHub link" });
     }
-    
+
     try {
         const commitsResponse = await axios.get(
             `https://api.github.com/repos${repoPath}/commits`
@@ -35,10 +36,10 @@ router.post("/", async (req, res) => {
         req.body.uploadDate = repoCreationDate
             ? new Date(repoCreationDate)
             : null;
-        
-        // console.log("req.body", req.body)
 
         const projectId = await createProject(req.body);
+        await kv.del("projects"); // Invalidate cache when new project is added
+
         res.status(201).json({ projectId });
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -46,8 +47,15 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
+    const cacheKey = "projects";
     try {
+        const cachedProjects = await kv.get(cacheKey);
+        if (cachedProjects) {
+            return res.status(200).json(JSON.parse(cachedProjects));
+        }
+
         const projects = await getProjects();
+        await kv.set(cacheKey, JSON.stringify(projects), "EX", 3600); // expires in 1 hour
         res.status(200).json(projects);
     } catch (error) {
         res.status(500).json({ error: error.message });
