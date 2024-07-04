@@ -5,7 +5,7 @@ import { getProjects, updateLastUpdateDate } from "../data/projects.js";
 import { insertChangelog, checkIfChangelogExists } from "../data/changelogs.js"; 
 import cron from "node-cron";
 import { URL } from "url";
-import dotenv from "dotenv";
+import kv from "../routes/redisClient.js";
 
 const fetchGitHubDataForProject = async (project, type) => {
     try {
@@ -53,51 +53,42 @@ const fetchGitHubDataForProject = async (project, type) => {
 const updateChangelogs = async () => {
     const projects = await getProjects();
 
-    // drop old changelogs
-
-    const changelogsCollection = await changelogs();
-    await changelogsCollection.drop();
-
     for (const project of projects) {
         let lastDate = new Date(project.lastUpdateDate);
 
         const commits = await fetchGitHubDataForProject(project, "commits");
-        if (commits) {
-            for (const commit of commits) {
-                const commitDate = new Date(commit.commit.author.date);
-                if (commitDate > lastDate) {
-                    lastDate = commitDate;
-                }
-                if (!(await checkIfChangelogExists(commit.sha))) {
-                    await insertChangelog({
-                        projectId: project._id,
-                        type: "COMMIT",
-                        projectName: project.shortTitle,
-                        by: commit.author.login,
-                        dateTime: commit.commit.author.date,
-                        message: commit.commit.message,
-                    });
-                }
+        for (const commit of commits) {
+            const commitDate = new Date(commit.commit.author.date);
+            if (commitDate > lastDate) {
+                lastDate = commitDate;
+            }
+            if (!(await checkIfChangelogExists(commit.sha))) {
+                await insertChangelog({
+                    projectId: project._id,
+                    type: "COMMIT",
+                    projectName: project.shortTitle,
+                    by: commit.author.login,
+                    dateTime: commit.commit.author.date,
+                    message: commit.commit.message,
+                });
             }
         }
 
         const pullRequests = await fetchGitHubDataForProject(project, "pulls");
-        if (pullRequests) {
-            for (const pr of pullRequests) {
-                const prDate = new Date(pr.created_at);
-                if (prDate > lastDate) {
-                    lastDate = prDate;
-                }
-                if (!(await checkIfChangelogExists(pr.id))) {
-                    await insertChangelog({
-                        projectId: project._id,
-                        type: "PULL_REQUEST",
-                        projectName: project.shortTitle,
-                        by: pr.user.login,
-                        dateTime: pr.created_at,
-                        message: pr.title,
-                    });
-                }
+        for (const pr of pullRequests) {
+            const prDate = new Date(pr.created_at);
+            if (prDate > lastDate) {
+                lastDate = prDate;
+            }
+            if (!(await checkIfChangelogExists(pr.id))) {
+                await insertChangelog({
+                    projectId: project._id,
+                    type: "PULL_REQUEST",
+                    projectName: project.shortTitle,
+                    by: pr.user.login,
+                    dateTime: pr.created_at,
+                    message: pr.title,
+                });
             }
         }
 

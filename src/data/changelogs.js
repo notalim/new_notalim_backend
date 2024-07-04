@@ -20,8 +20,12 @@ export async function insertChangelog(changelogData) {
 export async function checkIfChangelogExists(identifier) {
     const changelogsCollection = await changelogs();
     const query = {
-        $or: [{ "commit.sha": identifier }, { "pull_request.id": identifier }],
+        $or: [
+            { sha: identifier }, 
+            { id: identifier },
+        ],
     };
     const changelog = await changelogsCollection.findOne(query);
-    return changelog !== null; 
+    return changelog !== null;
 }
+

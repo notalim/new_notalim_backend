@@ -8,6 +8,8 @@ import {
     updateChangelogs,
 } from "./tasks/scheduler.js";
 
+import kv from "./routes/redisClient.js";
+
 dotenv.config();
 // console.log("GITHUB_TOKEN", process.env.GITHUB_TOKEN);
 
@@ -24,6 +26,8 @@ await updateChangelogs();
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
     // scheduleChangelogUpdates();
+    kv.del("changelogs");
+    kv.del("projects");
     console.log(`Server running on port ${port}`);
 });
 
