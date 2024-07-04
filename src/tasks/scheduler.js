@@ -53,6 +53,9 @@ const fetchGitHubDataForProject = async (project, type) => {
 const updateChangelogs = async () => {
     const projects = await getProjects();
 
+    const changelogsCollection = await changelogs();
+    await changelogsCollection.drop();
+
     for (const project of projects) {
         let lastDate = new Date(project.lastUpdateDate);
 
@@ -96,6 +99,9 @@ const updateChangelogs = async () => {
             await updateLastUpdateDate(project._id, lastDate);
         }
     }
+
+    kv.del("changelogs");
+    kv.del("projects");
 };
 
 // const scheduleChangelogUpdates = () => {

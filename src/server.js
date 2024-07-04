@@ -4,9 +4,7 @@ import cors from "cors";
 import setupRoutes from "./routes/index.js";
 
 // Import the function
-import {
-    updateChangelogs,
-} from "./tasks/scheduler.js";
+import { updateChangelogs } from "./tasks/scheduler.js";
 
 import kv from "./routes/redisClient.js";
 
@@ -22,12 +20,13 @@ app.use(express.urlencoded({ extended: true }));
 setupRoutes(app);
 
 await updateChangelogs();
+kv.del("changelogs");
+kv.del("projects");
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
     // scheduleChangelogUpdates();
-    kv.del("changelogs");
-    kv.del("projects");
+
     console.log(`Server running on port ${port}`);
 });
 
