@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
         // If not in cache, fetch from database
         const recentChangelogs = await getLastTenChangelogs();
         // Store in cache
-        await kv.set(cacheKey, JSON.stringify(recentChangelogs), "EX", 3600); // Expires in 1 hour
+        await kv.set(cacheKey, JSON.stringify(recentChangelogs), {ex: 3600}); // Expires in 1 hour
         res.status(200).json(recentChangelogs);
     } catch (error) {
         res.status(500).json({ error: "Internal server error" });

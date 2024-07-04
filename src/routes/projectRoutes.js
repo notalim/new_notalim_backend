@@ -55,9 +55,10 @@ router.get("/", async (req, res) => {
         }
 
         const projects = await getProjects();
-        await kv.set(cacheKey, JSON.stringify(projects), "EX", 3600); // expires in 1 hour
+        await kv.set(cacheKey, JSON.stringify(projects), {ex: 3600});
         res.status(200).json(projects);
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: error.message });
     }
 });
