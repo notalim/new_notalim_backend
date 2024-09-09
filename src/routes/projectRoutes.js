@@ -13,35 +13,56 @@ router.post("/", async (req, res) => {
     let repoPath;
     const { githubLink } = req.body;
 
-    try {
-        repoPath = new URL(githubLink).pathname;
-    } catch (error) {
-        return res.status(400).json({ error: "Invalid GitHub link" });
+    if (githubLink) {
+        try {
+            repoPath = new URL(githubLink).pathname;
+        } catch (error) {
+            return res.status(400).json({ error: "Invalid GitHub link" });
+        }
     }
 
     try {
-        const commitsResponse = await axios.get(
-            `https://api.github.com/repos${repoPath}/commits`
-        );
-        const latestCommitDate = commitsResponse.data[0]?.commit?.author?.date;
+        if (repoPath) {
+            try {
+                const commitsResponse = await axios.get(
+                    `https://api.github.com/repos${repoPath}/commits`
+                );
+                const latestCommitDate = commitsResponse.data[0]?.commit?.author?.date;
 
-        const repoDetailsResponse = await axios.get(
-            `https://api.github.com/repos${repoPath}`
-        );
-        const repoCreationDate = repoDetailsResponse.data.created_at;
+                const repoDetailsResponse = await axios.get(
+                    `https://api.github.com/repos${repoPath}`
+                );
+                const repoCreationDate = repoDetailsResponse.data.created_at;
 
-        req.body.lastUpdateDate = latestCommitDate
-            ? new Date(latestCommitDate)
-            : null;
-        req.body.uploadDate = repoCreationDate
-            ? new Date(repoCreationDate)
-            : null;
+                req.body.lastUpdateDate = latestCommitDate
+                    ? new Date(latestCommitDate)
+                    : null;
+                req.body.uploadDate = repoCreationDate
+                    ? new Date(repoCreationDate)
+                    : null;
+            } catch (error) {
+                // If we get a 404, assume the repo is private
+                if (error.response && error.response.status === 404) {
+                    req.body.isPrivate = true;
+                    req.body.lastUpdateDate = null;
+                    req.body.uploadDate = null;
+                } else {
+                    throw error; // Re-throw if it's not a 404
+                }
+            }
+        } else {
+            // No GitHub link provided
+            req.body.isPrivate = true;
+            req.body.lastUpdateDate = null;
+            req.body.uploadDate = null;
+        }
 
         const projectId = await createProject(req.body);
         await kv.del("projects"); // Invalidate cache when new project is added
 
         res.status(201).json({ projectId });
     } catch (error) {
+        console.error("Error in POST /projects:", error);
         res.status(400).json({ error: error.message });
     }
 });

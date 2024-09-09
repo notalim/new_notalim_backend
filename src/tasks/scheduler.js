@@ -73,6 +73,7 @@ const updateChangelogs = async () => {
                     by: commit.author.login,
                     dateTime: commit.commit.author.date,
                     message: commit.commit.message,
+                    sha: commit.sha,
                 });
             }
         }
@@ -91,6 +92,7 @@ const updateChangelogs = async () => {
                     by: pr.user.login,
                     dateTime: pr.created_at,
                     message: pr.title,
+                    id: pr.id,
                 });
             }
         }

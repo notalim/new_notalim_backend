@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 
 setupRoutes(app);
 
-await updateChangelogs();
+// await updateChangelogs();
 kv.del("changelogs");
 kv.del("projects");
 

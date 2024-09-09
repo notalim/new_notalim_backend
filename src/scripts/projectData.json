@@ -1,5 +1,47 @@
 [
     {
+  "title": "Birthday RSVP Full Stack App",
+  "shortTitle": "birthday-rsvp",
+  "description": "A React-based website for my dad's 50th birthday celebration, featuring a landing page with event details, an RSVP form, and an admin page to manage guest information. Includes responsive design, countdown timer, and animated UI components.",
+  "technologies": [
+    "React",
+    "TypeScript",
+    "Vite",
+    "Tailwind CSS",
+    "React Hook Form",
+    "Zod",
+    "date-fns",
+    "Framer Motion",
+    "Express.js",
+    "MongoDB"
+  ],
+  "githubLink": "https://github.com/notalim/birthday-rsvp",
+  "imageLink": null,
+  "releaseDate": "2024-09-01",
+  "liveLink": null
+},
+    {
+        "title": "JamWith",
+        "shortTitle": "jamwith",
+        "description": "JamWith is a dynamic music collaboration platform that connects musicians worldwide. Discover, collaborate, and create music together in a vibrant online community, fostering creativity and musical partnerships.",
+        "technologies": [
+            "TypeScript",
+            "React",
+            "MongoDB",
+            "Redis",
+            "Express",
+            "Tailwind CSS",
+            "Node.js",
+            "WebRTC",
+            "Socket.io",
+            "AWS"
+        ],
+        "githubLink": "https://github.com/JamWith/jamwith",
+        "imageLink": null,
+        "releaseDate": "2024-06-01",
+        "liveLink": "https://jamwith.net"
+    },
+    {
         "title": "Codagotchi",
         "shortTitle": "codagotchi",
         "description": "A VS Code extension that integrates a Tamagotchi-like experience where coding activities help nurture and evolve a digital pet. Users can level up their Codagotchi by completing coding tasks, participating in challenges, and maintaining a consistent coding schedule. The project utilizes GitHub usernames for friend functionality, enabling users to connect and compare their Codagotchi progress.",
