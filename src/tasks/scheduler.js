@@ -51,59 +51,72 @@ const fetchGitHubDataForProject = async (project, type) => {
 };
 
 const updateChangelogs = async () => {
-    const projects = await getProjects();
+    try {
+        const projects = await getProjects();
+        const changelogsCollection = await changelogs();
+        
+        // Consider removing this line if dropping the collection is not necessary
+        await changelogsCollection.drop();
 
-    const changelogsCollection = await changelogs();
-    await changelogsCollection.drop();
+        for (const project of projects) {
+            let lastDate = new Date(project.lastUpdateDate);
 
-    for (const project of projects) {
-        let lastDate = new Date(project.lastUpdateDate);
-
-        const commits = await fetchGitHubDataForProject(project, "commits");
-        for (const commit of commits) {
-            const commitDate = new Date(commit.commit.author.date);
-            if (commitDate > lastDate) {
-                lastDate = commitDate;
+            const commits = await fetchGitHubDataForProject(project, "commits");
+            if (commits && Array.isArray(commits)) {
+                for (const commit of commits) {
+                    const commitDate = new Date(commit.commit.author.date);
+                    if (commitDate > lastDate) {
+                        lastDate = commitDate;
+                    }
+                    if (!(await checkIfChangelogExists(commit.sha))) {
+                        await insertChangelog({
+                            projectId: project._id,
+                            type: "COMMIT",
+                            projectName: project.shortTitle,
+                            by: commit.author.login,
+                            dateTime: commit.commit.author.date,
+                            message: commit.commit.message,
+                            sha: commit.sha,
+                        });
+                    }
+                }
+            } else {
+                console.error(`No commits found for project ${project._id}`);
             }
-            if (!(await checkIfChangelogExists(commit.sha))) {
-                await insertChangelog({
-                    projectId: project._id,
-                    type: "COMMIT",
-                    projectName: project.shortTitle,
-                    by: commit.author.login,
-                    dateTime: commit.commit.author.date,
-                    message: commit.commit.message,
-                    sha: commit.sha,
-                });
+
+            const pullRequests = await fetchGitHubDataForProject(project, "pulls");
+            if (pullRequests && Array.isArray(pullRequests)) {
+                for (const pr of pullRequests) {
+                    const prDate = new Date(pr.created_at);
+                    if (prDate > lastDate) {
+                        lastDate = prDate;
+                    }
+                    if (!(await checkIfChangelogExists(pr.id))) {
+                        await insertChangelog({
+                            projectId: project._id,
+                            type: "PULL_REQUEST",
+                            projectName: project.shortTitle,
+                            by: pr.user.login,
+                            dateTime: pr.created_at,
+                            message: pr.title,
+                            id: pr.id,
+                        });
+                    }
+                }
+            } else {
+                console.error(`No pull requests found for project ${project._id}`);
+            }
+
+            if (lastDate > new Date(project.lastUpdateDate)) {
+                await updateLastUpdateDate(project._id, lastDate);
             }
         }
 
-        const pullRequests = await fetchGitHubDataForProject(project, "pulls");
-        for (const pr of pullRequests) {
-            const prDate = new Date(pr.created_at);
-            if (prDate > lastDate) {
-                lastDate = prDate;
-            }
-            if (!(await checkIfChangelogExists(pr.id))) {
-                await insertChangelog({
-                    projectId: project._id,
-                    type: "PULL_REQUEST",
-                    projectName: project.shortTitle,
-                    by: pr.user.login,
-                    dateTime: pr.created_at,
-                    message: pr.title,
-                    id: pr.id,
-                });
-            }
-        }
-
-        if (lastDate > new Date(project.lastUpdateDate)) {
-            await updateLastUpdateDate(project._id, lastDate);
-        }
+        kv.del("changelogs");
+        kv.del("projects");
+    } catch (error) {
+        console.error("Error updating changelogs:", error);
     }
-
-    kv.del("changelogs");
-    kv.del("projects");
 };
 
 // const scheduleChangelogUpdates = () => {
